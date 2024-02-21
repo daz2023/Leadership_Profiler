@@ -6,7 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
 "Life is about achieving and producing results for me","Others tell me I am too much of a perfectionist","I procrastinate on dealing with important but unpleasant tasks","Others tell me I worry too much","I get impatient with others easily and step in to push things forward","I easily get impatient and bored and want something different",
 "When I make a mistake, I beat myself up over it","I can be perceived as cold and too rational","Sometimes I feel like a victim or martyr","I am so into helping others that I sometimes lose sight of my own needs and feel resentful","The circumstances of work or life significantly affect how happy I feel",];
   
-const questionToCategoryMap = [0, 8, 16, 27, 12, 14, 20, 29, 6, 17, 21, 25, 4, 13, 23, 32, 3, 11, 18, 29,7, 15, 24, 34, 2, 10, 19, 30, 1, 9, 26, 31,5, 22, 33, 35];
+const questionToCategoryMap =  {
+        0: 0, 8: 0, 16: 0, 27: 0, // Avoider
+        12: 1, 14: 1, 20: 1, 29: 1, // Controler
+        6: 2, 17: 2, 21: 2, 25: 2,
+        4: 3, 13: 3, 23: 3, 32: 3,
+        3: 4, 11: 4, 18: 4, 29: 4,
+  7: 5, 15: 5, 24: 5, 34: 5,
+  2: 6, 10: 6, 19: 6, 30: 6,
+  1: 7, 9: 7, 26: 7, 31: 7,
+  5: 8, 22: 8, 33: 8, 35: 8,
+};
+
+     
 const categories = ["Avoider","Controler","Hyper Achiever","Hyper Rational","Hyper Vigilant","Pleaser","Restless","Stickler","Victim",];
 const categoryDescriptions = ["The Avoider focuses on the positive and pleasant in an extreme way. It avoids difficult and unpleasant tasks and conflicts.","The Controller, anxiety-based, must take charge and control situations and people’s actions to one’s own will. It generates high anxiety and impatience when that is not possible.","The Hyper-Achiever is dependent on constant performance and achievement for self-respect and self-validation. Latest achievements are quickly discounted, needing more.",
 "The Hyper-Rational focuses with intensity and exclusivity on the rational processing of everything, including relationships. It can be perceived as uncaring, unfeeling, or intellectually arrogant.","The Hyper-Vigilant generates continuous intense anxiety about all the dangers and what could go wrong. It creates a vigilance that can never rest.","The Pleaser indirectly tries to gain acceptance and affection by helping, pleasing, rescuing, or flattering others. It loses sight of its own needs and becomes resentful as a result.","The Restless is constantly searching for greater excitement in the next activity or constant busyness. It is rarely at peace or content with the current activity.","The Stickler seeks perfectionism and a need for order and organisation taken too far.  It lives in anxious trying to make too many things perfect.","The Victim is emotional and temperamental as a way to gain attention and affection. It overly focuses on internal feelings, particularly painful ones.",
