@@ -196,12 +196,15 @@ function showResults() {
         labels.push(category);
         dataPoints.push(scorePercentage);
     });
-resultText.innerHTML = resultHTML;
-const data = {
-labels: labels,
-datasets: [{
-label: 'Score Percentage',
-backgroundColor: [
+
+    // Update the text display
+    resultText.innerHTML = resultHTML;
+
+    const data = {
+        labels: labels, // Category names
+        datasets: [{
+            label: 'Score Percentage',
+   backgroundColor: [
     'rgba(255, 99, 132, 0.2)',
     'rgba(255, 159, 64, 0.2)',
     'rgba(255, 205, 86, 0.2)',
@@ -214,7 +217,7 @@ backgroundColor: [
     'rgba(74, 63, 42, 0.2)',
     'rgba(150, 161, 94, 0.2)',
     'rgba(128, 145, 214, 0.2)'
-  ] ,
+  ],
   borderColor: [
     'rgb(255, 99, 132)',
     'rgb(255, 159, 64)',
@@ -228,13 +231,17 @@ backgroundColor: [
     'rgb(74, 63, 42)',
     'rgb(150, 161, 94)',
     'rgb(128, 145, 214)'
-  ] ,
-borderWidth: 1,
-data: dataPoints 
-}]
-};
-const ctx = document.getElementById('resultsChart').getContext('2d');
-if (window.myResultsChart) {
+  ],
+            borderWidth: 1,
+            data: dataPoints // Score percentages
+        }]
+    };
+
+  
+    const ctx = document.getElementById('resultsChart').getContext('2d');
+    if (window.myResultsChart) {
+        window.myResultsChart.destroy(); 
+    }
 window.myResultsChart = new Chart(ctx, {
     type: 'bar', // This remains the same as you're still creating a bar chart
     data: data,
@@ -259,10 +266,10 @@ window.myResultsChart = new Chart(ctx, {
 });
 }
 questionnaireDiv.addEventListener('change', function(event) {
-if (event.target && event.target.matches('input[type="radio"].response-option')) {
- handleNextQuestionAutomatically();
-}
-});
-nextBtn.addEventListener('click', handleNextButton);
-displayQuestion(currentQuestionIndex);
+        if (event.target && event.target.matches('input[type="radio"].response-option')) {
+            handleNextQuestionAutomatically();
+        }
+    });
+    nextBtn.addEventListener('click', handleNextButton);
+    displayQuestion(currentQuestionIndex);
 });
