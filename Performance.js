@@ -198,7 +198,7 @@ function showResults() {
     let dataPoints = [];
     categories.forEach((category, index) => {
         const categoryScore = categoryScores[index];
-        const maxCategoryScore = 6 * 5; // Assuming each category can score a max of 30 points (6 points per question for 5 questions)
+        const maxCategoryScore = 6 * 5; // Corrected: Each category can score a max of 30 points (5 points per question for 6 questions)
         const scorePercentage = (categoryScore / maxCategoryScore) * 100;
         resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
         labels.push(category);
