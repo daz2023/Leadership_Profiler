@@ -181,20 +181,20 @@ if (currentQuestionIndex < questions.length - 1) {
     }
 }
 function showResults() {
-questionnaireDiv.style.display = 'none';
-nextBtn.style.display = 'none';
-resultContainer.style.display = 'block';
-let resultHTML = '';
-let labels = []; 
-let dataPoints = []; 
-categories.forEach((category, index) => {
-const categoryScore = categoryScores[index];
-const maxCategoryScore = 4 * 5; 
-const scorePercentage = (categoryScore / maxCategoryScore) * 100;
-resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
-labels.push(category); 
-        dataPoints.push(scorePercentage); 
-});
+    questionnaireDiv.style.display = 'none';
+    nextBtn.style.display = 'none';
+    resultContainer.style.display = 'block';
+    let resultHTML = '';
+    let labels = [];
+    let dataPoints = [];
+    categories.forEach((category, index) => {
+        const categoryScore = categoryScores[index];
+        const maxCategoryScore = 4 * 5; // Corrected: Each category can score a max of 20 points (5 points per question for 4 questions)
+        const scorePercentage = (categoryScore / maxCategoryScore) * 100;
+        resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
+        labels.push(category);
+        dataPoints.push(scorePercentage);
+    });
 resultText.innerHTML = resultHTML;
 const data = {
 labels: labels,
