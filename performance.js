@@ -197,7 +197,7 @@ function showResults() {
     let dataPoints = [];
     categories.forEach((category, index) => {
         const categoryScore = categoryScores[index];
-        const maxCategoryScore = 4 * 5; // Corrected: Each category can score a max of 20 points (5 points per question for 4 questions)
+        const maxCategoryScore = 6 * 5; // Corrected: Each category can score a max of 20 points (5 points per question for 4 questions)
         const scorePercentage = (categoryScore / maxCategoryScore) * 100;
         resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
         labels.push(category);
@@ -236,7 +236,7 @@ function showResults() {
                         display: true
                     },
                     suggestedMin: 0,
-                    suggestedMax: 50,
+                    suggestedMax: 100,
                  ticks: {
                 stepSize: 10, // Adjust step size for more granularity
                 callback: function(value) {
