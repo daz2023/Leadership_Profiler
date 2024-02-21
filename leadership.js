@@ -235,28 +235,27 @@ data: dataPoints
 };
 const ctx = document.getElementById('resultsChart').getContext('2d');
 if (window.myResultsChart) {
-window.myResultsChart.destroy(); 
-}
 window.myResultsChart = new Chart(ctx, {
-type: 'bar', 
-data: data, 
-options: {
-scales: {
-y: {
-beginAtZero: true,
-ticks: {
-callback: function(value) {
-return value + "%"; 
-}
-}
-}
-},
-plugins: {
-legend: {
-display: false 
-}
-}
-}
+    type: 'bar', // This remains the same as you're still creating a bar chart
+    data: data,
+    options: {
+        indexAxis: 'y', // Correct property to make the bars horizontal
+        scales: {
+            x: { // Changed from 'y' to 'x' because we're now dealing with a horizontal chart
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + "%";
+                    }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
 });
 }
 questionnaireDiv.addEventListener('change', function(event) {
