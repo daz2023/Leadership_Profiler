@@ -221,37 +221,28 @@ function showResults() {
     if (window.myResultsChart) {
         window.myResultsChart.destroy();
     }
-    window.myResultsChart = new Chart(ctx, {
-        type: 'radar',
-        data: data,
-        options: {
-            elements: {
-                line: {
-                    borderWidth: 3
-                }
-            },
-            scales: {
-                r: {
-                    angleLines: {
-                        display: true
-                    },
-                    suggestedMin: 0,
-                    suggestedMax: 100,
-                 ticks: {
-                stepSize: 10, // Adjust step size for more granularity
-                callback: function(value) {
-                    return value + "%";
-                        }
+   window.myResultsChart = new Chart(ctx, {
+    type: 'bar', // This remains the same as you're still creating a bar chart
+    data: data,
+    options: {
+        indexAxis: 'y', // Correct property to make the bars horizontal
+        scales: {
+            x: { // Changed from 'y' to 'x' because we're now dealing with a horizontal chart
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + "%";
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    display: true // Set to true if you want to display the legend, false otherwise
-                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
             }
         }
-    });
+    }
+});
 }
 questionnaireDiv.addEventListener('change', function(event) {
     if (event.target && event.target.matches('input[type="radio"].response-option')) {
