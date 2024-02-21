@@ -190,61 +190,74 @@ function handleNextButton() {
 }
 
 function showResults() {
-questionnaireDiv.style.display = 'none';
-nextBtn.style.display = 'none';
-resultContainer.style.display = 'block';
-let resultHTML = '';
-let labels = []; 
-let dataPoints = []; 
-categories.forEach((category, index) => {
-const categoryScore = categoryScores[index];
-const maxCategoryScore = 6 * 5; 
-const scorePercentage = (categoryScore / maxCategoryScore) * 100;
-resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
-labels.push(category); 
-        dataPoints.push(scorePercentage); 
-});
-resultText.innerHTML = resultHTML;
-const data = {
-labels: labels,
-datasets: [{
-label: 'Score Percentage',
-backgroundColor: 'rgba(0, 123, 255, 0.5)',
-borderColor: 'rgba(0, 123, 255, 1)',
-borderWidth: 1,
-data: dataPoints 
-}]
-};
-const ctx = document.getElementById('resultsChart').getContext('2d');
-if (window.myResultsChart) {
-window.myResultsChart.destroy(); 
-}
-window.myResultsChart = new Chart(ctx, {
-type: 'bar', 
-data: data, 
-options: {
-scales: {
-y: {
-beginAtZero: true,
-ticks: {
-callback: function(value) {
-return value + "%"; 
-}
-}
-}
-},
-plugins: {
-legend: {
-display: false 
-}
-}
-}
-});
+    questionnaireDiv.style.display = 'none';
+    nextBtn.style.display = 'none';
+    resultContainer.style.display = 'block';
+    let resultHTML = '';
+    let labels = [];
+    let dataPoints = [];
+    categories.forEach((category, index) => {
+        const categoryScore = categoryScores[index];
+        const maxCategoryScore = 6 * 5; // Assuming each category can score a max of 30 points (6 points per question for 5 questions)
+        const scorePercentage = (categoryScore / maxCategoryScore) * 100;
+        resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
+        labels.push(category);
+        dataPoints.push(scorePercentage);
+    });
+    resultText.innerHTML = resultHTML;
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Score Percentage',
+            backgroundColor: 'rgba(0, 123, 255, 0.5)',
+            borderColor: 'rgba(0, 123, 255, 1)',
+            pointBackgroundColor: 'rgba(0, 123, 255, 1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(0, 123, 255, 1)',
+            data: dataPoints
+        }]
+    };
+    const ctx = document.getElementById('resultsChart').getContext('2d');
+    if (window.myResultsChart) {
+        window.myResultsChart.destroy();
+    }
+    window.myResultsChart = new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: {
+            elements: {
+                line: {
+                    borderWidth: 3
+                }
+            },
+            scales: {
+                r: {
+                    angleLines: {
+                        display: true
+                    },
+                    suggestedMin: 0,
+                    suggestedMax: 50,
+                 ticks: {
+                stepSize: 10, // Adjust step size for more granularity
+                callback: function(value) {
+                    return value + "%";
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true // Set to true if you want to display the legend, false otherwise
+                }
+            }
+        }
+    });
 }
 questionnaireDiv.addEventListener('change', function(event) {
-if (event.target && event.target.matches('input[type="radio"].response-option')) {
- handleNextQuestionAutomatically();
-}
+    if (event.target && event.target.matches('input[type="radio"].response-option')) {
+        handleNextQuestionAutomatically();
+    }
 });
 nextBtn.addEventListener('click', handleNextButton);
 displayQuestion(currentQuestionIndex);
