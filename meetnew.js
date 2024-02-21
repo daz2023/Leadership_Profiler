@@ -181,27 +181,28 @@ function showResults() {
     if (window.myResultsChart) {
         window.myResultsChart.destroy(); 
     }
-    window.myResultsChart = new Chart(ctx, {
-        type: 'bar', 
-        data: data, 
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return value + "%"; 
-                        }
+window.myResultsChart = new Chart(ctx, {
+    type: 'bar', // This remains the same as you're still creating a bar chart
+    data: data,
+    options: {
+        indexAxis: 'y', // Correct property to make the bars horizontal
+        scales: {
+            x: { // Changed from 'y' to 'x' because we're now dealing with a horizontal chart
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + "%";
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    display: false 
-                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
             }
         }
-    });
+    }
+});
 }
 questionnaireDiv.addEventListener('change', function(event) {
         if (event.target && event.target.matches('input[type="radio"].response-option')) {
