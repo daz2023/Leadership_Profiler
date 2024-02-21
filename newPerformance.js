@@ -50,17 +50,16 @@ const questions = [
 "I engage in deep conversations regularly.",
   ];
   
-     const questionToCategoryMap = [
-
-    0, 8, 16, 24, 32, 40, // Questions for "Self-Awareness & Strengths"
-    1, 9, 17, 25, 33, 41, // Questions for "Vision & Goal Alignment"
-    2, 10, 18, 26, 34, 42, 
-    3, 11, 19, 27, 35, 43,
-    4, 12, 20, 28, 36, 44,
-    5, 13, 21, 29, 37, 45,
-    6, 14, 22, 30, 38, 46,
-    7, 15, 23, 31, 39, 47,  // Questions 9-16
-    ];
+     const questionToCategoryMap = { 
+    0: 0, 8: 0, 16: 0, 24: 0, 32: 0, 40: 0,   
+    1: 1, 9: 1, 17: 1, 25: 1, 33: 1, 41: 1,  
+    2: 2, 10: 2, 18: 2, 26: 2, 34: 2, 42: 2, 
+    3: 3, 11: 3, 19: 3, 27: 3, 35: 3, 43: 3,
+    4: 4, 12: 4, 20: 4, 28: 4, 36: 4, 44: 4,
+    5: 5, 13: 5, 21: 5, 29: 5, 37: 5, 45: 5,
+    6: 6, 14: 6, 22: 6, 30: 6, 38: 6, 46: 6,
+    7: 7, 15: 7, 23: 7, 31: 7, 39: 7, 47: 7,  
+};
 
     const categories = [
         "Self-Awareness & Strengths",
