@@ -189,88 +189,95 @@ function showResults() {
     let resultHTML = '';
     let labels = [];
     let dataPoints = [];
+    let descriptions = []; // Array to hold category descriptions for use in tooltips
     categories.forEach((category, index) => {
         const categoryScore = categoryScores[index];
-        const maxCategoryScore = 4 * 5; // Corrected: Each category can score a max of 20 points (5 points per question for 4 questions)
+        const maxCategoryScore = 4 * 5; // Each category can score a max of 20 points
         const scorePercentage = (categoryScore / maxCategoryScore) * 100;
         resultHTML += `<h3>${category}: ${scorePercentage.toFixed(2)}%</h3><p>${categoryDescriptions[index]}</p>`;
         labels.push(category);
         dataPoints.push(scorePercentage);
+        descriptions.push(categoryDescriptions[index]); // Add description to array
     });
 
-    // Update the text display
+    // Combine labels and dataPoints for sorting
+    let combined = labels.map((label, i) => ({ label: label, dataPoint: dataPoints[i] }));
+    // Sort in descending order of dataPoints (percentage)
+    combined.sort((a, b) => b.dataPoint - a.dataPoint);
+
+    // Extract sorted labels and dataPoints
+    labels = combined.map(item => item.label);
+    dataPoints = combined.map(item => item.dataPoint);
+
+    // Update the text display with sorted results
     resultText.innerHTML = resultHTML;
 
     const data = {
-        labels: labels, // Category names
+        labels: labels, // Sorted category names
         datasets: [{
             label: 'Score Percentage',
-   backgroundColor: [
-    'rgba(255, 99, 132, 0.2)',
-    'rgba(255, 159, 64, 0.2)',
-    'rgba(255, 205, 86, 0.2)',
-    'rgba(75, 192, 192, 0.2)',
-    'rgba(54, 162, 235, 0.2)',
-    'rgba(153, 102, 255, 0.2)',
-    'rgba(201, 203, 207, 0.2)',
-    'rgba(251, 13, 149, 0.2)',
-    'rgba(224, 0, 161, 0.2)',
-    'rgba(74, 63, 42, 0.2)',
-    'rgba(150, 161, 94, 0.2)',
-    'rgba(128, 145, 214, 0.2)'
-  ],
-  borderColor: [
-    'rgb(255, 99, 132)',
-    'rgb(255, 159, 64)',
-    'rgb(255, 205, 86)',
-    'rgb(75, 192, 192)',
-    'rgb(54, 162, 235)',
-    'rgb(153, 102, 255)',
-    'rgb(201, 203, 207)',
-    'rgb(251, 13, 149)',
-    'rgb(224, 0, 161)',
-    'rgb(74, 63, 42)',
-    'rgb(150, 161, 94)',
-    'rgb(128, 145, 214)'
-  ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)', 'rgba(251, 13, 149, 0.2)',
+                'rgba(224, 0, 161, 0.2)', 'rgba(74, 63, 42, 0.2)',
+                'rgba(150, 161, 94, 0.2)', 'rgba(128, 145, 214, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)', 'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)', 'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)', 'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)', 'rgb(251, 13, 149)',
+                'rgb(224, 0, 161)', 'rgb(74, 63, 42)',
+                'rgb(150, 161, 94)', 'rgb(128, 145, 214)'
+            ],
             borderWidth: 1,
-            data: dataPoints // Score percentages
+            data: dataPoints // Sorted score percentages
         }]
     };
 
-  
-    const ctx = document.getElementById('resultsChart').getContext('2d');
+  const ctx = document.getElementById('resultsChart').getContext('2d');
     if (window.myResultsChart) {
-        window.myResultsChart.destroy(); 
+        window.myResultsChart.destroy();
     }
-window.myResultsChart = new Chart(ctx, {
-    type: 'bar', // This remains the same as you're still creating a bar chart
-    data: data,
-    options: {
-        indexAxis: 'y', // Correct property to make the bars horizontal
-        scales: {
-            x: { // Changed from 'y' to 'x' because we're now dealing with a horizontal chart
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value) {
-                        return value + "%";
+    window.myResultsChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            indexAxis: 'y',
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + "%";
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        afterBody: function(context) {
+                            // Display the description in the tooltip
+                            return descriptions[context[0].dataIndex];
+                        }
                     }
                 }
             }
-        },
-        plugins: {
-            legend: {
-                display: false
-            }
-        }
-    }
-});
-}
-questionnaireDiv.addEventListener('change', function(event) {
-        if (event.target && event.target.matches('input[type="radio"].response-option')) {
-            handleNextQuestionAutomatically();
         }
     });
-    nextBtn.addEventListener('click', handleNextButton);
-    displayQuestion(currentQuestionIndex);
+}
+
+questionnaireDiv.addEventListener('change', function(event) {
+    if (event.target && event.target.matches('input[type="radio"].response-option')) {
+        handleNextQuestionAutomatically();
+    }
+});
+nextBtn.addEventListener('click', handleNextButton);
+displayQuestion(currentQuestionIndex);
 });
